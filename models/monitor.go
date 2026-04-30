@@ -12,3 +12,9 @@ type Monitor struct {
 	HashValuesBody  string    `gorm:"column:hash_values_body"`
 	CreatedAt       time.Time `gorm:"autoCreateTime"`
 }
+
+type MonitorView struct {
+	Time        string
+	TitleChange float64
+	BodyChange  float64
+}

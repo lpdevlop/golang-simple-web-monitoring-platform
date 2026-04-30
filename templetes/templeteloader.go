@@ -32,13 +32,20 @@ func homeHandleer(w http.ResponseWriter, r *http.Request) {
 		}
 
 		db.DB.Create(&record)
-	}
 
-	err := tmpl.Execute(w, nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+		views, _ := db.BuildComparison(url, titlehash, bodyHash)
 
+		data := struct {
+			Records []models.MonitorView
+		}{
+			Records: views,
+		}
+
+		err := tmpl.Execute(w, data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	}
 }
 
 func InitHTML() {
