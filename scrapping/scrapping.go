@@ -1,10 +1,14 @@
 package scrapping
 
 import (
+	"fmt"
+
 	"github.com/gocolly/colly/v2"
 )
 
 func StartScraping(url string) (string, string) {
+
+	fmt.Println("call Start Scraping")
 
 	c := colly.NewCollector()
 

@@ -13,6 +13,7 @@ import (
 var tmpl = template.Must(template.ParseFiles("templetes/index.html"))
 
 func homeHandleer(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("call Home Handler")
 
 	if r.Method == http.MethodPost {
 
@@ -45,11 +46,24 @@ func homeHandleer(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
+		return
 	}
+	data := struct {
+		Records []models.Monitor
+	}{
+		Records: []models.Monitor{},
+	}
+
+	err := tmpl.Execute(w, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
 }
 
 func InitHTML() {
 	http.HandleFunc("/", homeHandleer)
+	fmt.Println("Server running at http://localhost:8080")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		panic(err)
