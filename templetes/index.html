@@ -36,7 +36,7 @@
 
         .green { color: green; }
         .red { color: red; }
-        .gray { color: gray; }
+        .gray { color: rgb(10, 0, 88); }
     </style>
 </head>
 
@@ -53,15 +53,17 @@
 
     <table>
         <tr>
-            <th>Time (Previous Hash)</th>
-            <th>Title Change %</th>
-            <th>Body Change %</th>
-            <th>Total Changes</th>
+            <th>Url</th>
+            <th>Time</th>
+            <th>Title Change</th>
+            <th>Body Change</th>
         </tr>
 
         {{range .Records}}
         <tr>
-            <td>{{.Time}}<br>{{.PrevHash}}</td>
+            <td>{{.Url}}<br></td>
+
+            <td>{{.Time}}<br></td>
 
             <td class="{{.TitleColor}}">
                 {{.TitleChange}}%
@@ -69,10 +71,6 @@
 
             <td class="{{.BodyColor}}">
                 {{.BodyChange}}%
-            </td>
-
-            <td>
-                {{.ChangeCount}} times
             </td>
         </tr>
         {{end}}

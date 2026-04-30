@@ -45,7 +45,7 @@ func getRecords(url string) ([]models.Monitor, error) {
 
 	var records []models.Monitor
 
-	err := DB.Where("url = ?", url).Order("created_at_desc").Find(&records).Error
+	err := DB.Where("url = ?", url).Order("created_at").Find(&records).Error
 
 	if err != nil {
 		return nil, err
@@ -96,6 +96,7 @@ func BuildComparison(url string, currentTitle string, currentBody string) ([]mod
 		bodyChange := calculateChangePercent(r.HashValuesBody, currentBody)
 
 		view := models.MonitorView{
+			Url:         url,
 			Time:        r.CreatedAt.Format("2006-01-02 15:04"),
 			TitleChange: titleChange,
 			BodyChange:  bodyChange,

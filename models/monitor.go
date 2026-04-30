@@ -17,4 +17,5 @@ type MonitorView struct {
 	Time        string
 	TitleChange float64
 	BodyChange  float64
+	Url         string
 }
