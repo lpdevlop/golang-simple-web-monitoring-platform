@@ -1,16 +1,17 @@
 package db
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
+	"webscaper/models"
 
 	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-var DB *sql.DB
+var DB *gorm.DB
 
 func Init(envPath string) {
 
@@ -29,16 +30,13 @@ func Init(envPath string) {
 		host, port, user, password, dbname,
 	)
 
-	var err error
-	DB, err = sql.Open("postgres", connectionstring)
+	database, err := gorm.Open(postgres.Open(connectionstring), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("Failed to open DB: %v", err)
+		log.Fatal("Failed to connect to database:", err)
 	}
 
-	err = DB.Ping()
-	if err != nil {
-		log.Fatalf("Failed to connect DB: %v", err)
-	}
+	DB = database
 
-	fmt.Println("Connected to PostgreSQL")
+	DB.AutoMigrate(&models.Monitor{})
+
 }
